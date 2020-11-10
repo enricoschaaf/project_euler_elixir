@@ -14,7 +14,12 @@ defmodule ProjectEulerElixir do
 
   def main(n) do
     0..(n - 1)
-    |> Enum.filter(fn x -> rem(x, 3) == 0 or rem(x, 5) == 0 end)
-    |> Enum.sum()
+    |> Enum.reduce(
+      &if(rem(&1, 3) == 0 or rem(&1, 5) == 0) do
+        &2 + &1
+      else
+        &2
+      end
+    )
   end
 end
