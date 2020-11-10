@@ -12,7 +12,6 @@ defmodule ProjectEulerElixir do
       :world
 
   """
-  def hello do
-    :world
+  def main do
   end
 end
