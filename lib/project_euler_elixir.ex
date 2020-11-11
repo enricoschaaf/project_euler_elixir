@@ -15,16 +15,22 @@ defmodule ProjectEulerElixir do
   """
 
   def main(n) do
-    Stream.iterate(0, &(&1 + 1))
-    |> Stream.map(&ProjectEulerElixir.fib(&1))
-    |> Enum.take_while(&(&1 < n))
-    |> Enum.filter(&(rem(&1, 2) == 0))
-    |> Enum.sum()
+    {0, 0}
+    |> Stream.iterate(fn
+      {0, 0} ->
+        {1, 0}
+
+      {a, b} ->
+        {a + b, a}
+    end)
+    |> Stream.map(&Kernel.elem(&1, 1))
+    |> Stream.take_while(&(&1 < n))
+    |> Enum.reduce(
+      &if(rem(&1, 2) == 0) do
+        &1 + &2
+      else
+        &2
+      end
+    )
   end
-
-  def fib(0), do: 0
-  def fib(1), do: 1
-  def fib(n), do: fib(n - 1) + fib(n - 2)
 end
-
-IO.inspect(ProjectEulerElixir.main(4_000_000))
